@@ -11,7 +11,7 @@ def solve(contributors, projects_dict):
     done_projects = set()
     busy_collaborators = set()
     while True:
-        if all_projects_are_impossible(current_day, projects_d):
+        if all_projects_are_impossible(current_day, projects_dict):
             break
 
         for (project, start_day, team) in current_projects:
@@ -27,7 +27,7 @@ def solve(contributors, projects_dict):
         for project in projects:
             team = make_team(project, contributors, busy_collaborators)
             if team: 
-                assignments += (project, team)
+                assignments += [(project, team)]
                 current_projects += [(project, team)]
                 busy_collaborators.update(team)
                 del projects_dict[project["name"]]
