@@ -40,4 +40,11 @@ def input_parser(file_path):
     return skills_dict, project_dict
 
 
+def sort_collabs_skills(skills_dict: dict):
+    res = {}
+    for key, value in skills_dict.items():
+        res[key] = sorted(value.items(), key=lambda k: k[1], reverse=True)
+    return res
+
+
 input_parser("a_an_example.in.txt")

@@ -1,3 +1,6 @@
+from jaime import sort_collabs_skills
+
+
 def solve(contributors, projects_dict):
     """
     projects : {"name": "Logging", "required_skills":  [{"name": "c++", "level": 2}], "days" : 3, "best_before_day" : 3, "score" : 100}
@@ -9,6 +12,7 @@ def solve(contributors, projects_dict):
     current_projects = []
     done_projects = set()
     busy_collaborators = set()
+    sorted_skills = sort_collabs_skills(contributors)
     while True:
         if not any_project_profitable(projects_dict, current_day):
             break
@@ -23,9 +27,8 @@ def solve(contributors, projects_dict):
         # optimisation for later
         # if is_project_unworthy(projects[0], current_day):
         #     break
-
         for project in projects:
-            team = make_team(project, contributors, busy_collaborators)
+            team = make_team(project, contributors, busy_collaborators, sorted_skills)
             if team: 
                 assignments += [(project, team)]
                 current_projects += [(project, current_day, team)]
@@ -33,7 +36,7 @@ def solve(contributors, projects_dict):
                 del projects_dict[project["name"]]
 
         
-        current_day += 1    
+        current_day += 1
         
     return assignments
 
@@ -47,18 +50,25 @@ def is_project_doable(project, contributors, current_day,  busy_collaborators, c
     pass
 
 
-def make_team(project, contributors, busy_collaborators):
+def make_team(project, contributors, busy_collaborators, sorted_skills):
     skills = project['skills']
     cont = set(list(contributors.values())[0].keys()) - busy_collaborators
     team = []
     if len(cont) >= len(skills):
         for skill, value in skills:
-            for collab in cont:
-                if contributors[skill][collab] >= value and collab not in team:
+            no_better = False
+            for collab, _ in sorted_skills[skill]:
+                if contributors[skill][collab] >= value and collab not in team and collab in cont:
                     team.append(collab)
+                    break
+                elif contributors[skill][collab] < value:
+                    no_better = True
                     break
             else:
                 return 0
+            if no_better:
+                return 0
+            cont.remove(collab)
         return team
     return 0
 
