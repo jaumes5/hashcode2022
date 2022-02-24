@@ -49,7 +49,19 @@ def is_project_doable(project, contributors, current_day,  busy_collaborators, c
 
 
 def make_team(project, contributors, busy_collaborators):
-    pass
+    skills = project['skills']
+    cont = set(list(contributors.values())[0].keys()) - busy_collaborators
+    team = []
+    if len(cont) >= len(skills):
+        for skill, value in skills:
+            for collab in cont:
+                if contributors[skill][collab] >= value:
+                    team.append(collab)
+                    break
+            else:
+                return 0
+        return team
+    return 0
 
 def is_project_done(project, start_day, current_day, team):
     return current_day >= (start_day + project["num_days"])
