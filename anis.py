@@ -60,7 +60,7 @@ def any_project_profitable(projects_dict, current_day):
 def is_project_worthy(project, current_day):
     # 5 > (13 - 10)
     # 5 > (2 - 10)
-    print(f' {project["score"]} > ({current_day} - {project["best_before"]})')
+    # print(f' {project["score"]} > ({current_day} - {project["best_before"]})')
     return project["score"] > (current_day - project["best_before"])
 
 
