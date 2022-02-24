@@ -11,7 +11,7 @@ def solve(contributors, projects_dict):
     done_projects = set()
     busy_collaborators = set()
     while True:
-        if all_projects_are_impossible(current_day, projects_dict):
+        if all_projects_are_unworthy(current_day, projects_dict):
             break
 
         for (project, start_day, team) in current_projects:
@@ -21,8 +21,9 @@ def solve(contributors, projects_dict):
 
         projects = sort_projects(projects_dict.values())
 
-        if is_project_impossible(projects[0], current_day):
-            break
+        # optimisation for later
+        # if is_project_unworthy(projects[0], current_day):
+        #     break
 
         for project in projects:
             team = make_team(project, contributors, busy_collaborators)
