@@ -3,6 +3,7 @@ def solve(contributors, projects_d):
     projects : {"name": "Logging", "required_skills":  [{"name": "c++", "level": 2}], "days" : 3, "best_before_day" : 3, "score" : 100}
     contributors : [{"name" : "Bob", "skills" : [{"name": "c++", "level": 2}]}]
     """
+    print(contributors)
     current_day = 0
 
     assignments = []
@@ -15,20 +16,20 @@ def solve(contributors, projects_d):
 
         for (project, start_day, team) in current_projects:
             if is_project_done(project, start_day, current_day, team):
-                busy_collaborators = busy_collaborators.difference([t["name"] for t in team])
+                busy_collaborators = busy_collaborators.difference(team)
                 del projects_d[project["name"]]
 
         projects = sort_projects(projects_d.values())
 
         if is_project_impossible(projects[0]):
             break
-        
+
         for project in projects:
             if is_project_doable(project, contributors, current_day, busy_collaborators, current_projects):
                 team = make_team(project, contributors, busy_collaborators)
                 assignments += (project, team)
                 current_projects.add((project, team))
-                busy_collaborators.update([t["name"] for t in team])
+                busy_collaborators.update(team)
 
         
         current_day += 1    
@@ -52,7 +53,7 @@ def is_project_done(project, start_day, current_day, team):
     pass
 
 def all_projects_are_impossible(current_day, projects_d):
-    return False 
+    return True 
 
 def is_project_impossible(project):
-    return False
+    return True
