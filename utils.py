@@ -5,9 +5,9 @@ import os
 def read_input(path: str):
     if isdir(path):
         files = [
-            read_file(file)
+            read_file(os.path.join(path, filename))
             for filename in os.listdir(path)
-            if isfile(file := os.path.join(path, filename))
+            if isfile(os.path.join(path, filename))
         ]
     elif isfile(path):
         files = [read_file(path)]
