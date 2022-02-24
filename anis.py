@@ -42,7 +42,7 @@ def solve(contributors, projects_dict):
 
 def sort_projects(projects):
     def get_project_sort_key(project):
-        return (project["best_before"], - project["score"] / project["num_days"] / len(project["skills"]))
+        return (project["num_days"], project["best_before"], - project["score"] / project["num_days"] / len(project["skills"]))
     return sorted(projects, key=get_project_sort_key)
 
 def is_project_doable(project, contributors, current_day,  busy_collaborators, current_projects):
