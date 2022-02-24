@@ -26,9 +26,9 @@ def input_parser(file_path):
         )
         for _ in range(int(number_roles)):
             skill, level = files.pop(0).split(" ")
-            if project in skills_dict:
+            if project in project_dict:
                 project_dict[project]["skills"].append((skill, int(level)))
-            if project not in skills_dict:
+            if project not in project_dict:
                 project_dict[project] = {
                     "skills": [(skill, int(level))],
                     "num_days": num_days,
