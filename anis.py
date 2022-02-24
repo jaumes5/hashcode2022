@@ -24,7 +24,7 @@ def solve(contributors, projects_dict):
 
 
         for project in projects:
-            if is_project_unworthy(projects[0], current_day):
+            if is_project_unworthy(project, current_day):
                 del projects_dict[project["name"]]
                 continue
             team = make_team(project, contributors, busy_collaborators)
