@@ -53,8 +53,11 @@ def make_team(project, contributors, busy_collaborators):
 def is_project_done(project, start_day, current_day, team):
     return current_day >= (start_day + project["num_days"])
 
-def all_projects_are_impossible(current_day, projects_d):
-    return True 
+def all_projects_are_unworthy(projects_dict, current_day):
+    return all(is_project_unworthy(p, current_day) for p in projects_dict.values()) 
 
-def is_project_impossible(project):
-    return True
+def is_project_unworthy(project, current_day):
+    # 5 > (13 - 10)
+    # 5 > (2 - 10)
+
+    return project["score"] > (current_day - project["best_before"])
