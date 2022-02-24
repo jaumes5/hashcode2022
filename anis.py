@@ -67,4 +67,5 @@ def is_project_worthy(project, current_day):
 def make_output_file(assignments):
     with open('output.txt', 'w') as f:
         for a in assignments:
-            f.write(f"{a[0]['name']} {a[1].join(' ')}")
+            f.write(f"{a[0]['name']}")
+            f.write(f"{a[1].join(' ')}")
