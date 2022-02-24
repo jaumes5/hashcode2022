@@ -29,7 +29,7 @@ def solve(contributors, projects_dict):
             team = make_team(project, contributors, busy_collaborators)
             if team: 
                 assignments += [(project, team)]
-                current_projects += [(project, team)]
+                current_projects += [(project, current_day, team)]
                 busy_collaborators.update(team)
                 del projects_dict[project["name"]]
 
@@ -62,3 +62,9 @@ def is_project_worthy(project, current_day):
     # 5 > (2 - 10)
     print(f' {project["score"]} > ({current_day} - {project["best_before"]})')
     return project["score"] > (current_day - project["best_before"])
+
+
+def make_output_file(assignments):
+    with open('output.txt', 'w') as f:
+        for a in assignments:
+            f.write(f"{a[0]['name']} {a[1].join(' ')}")
