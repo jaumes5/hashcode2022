@@ -56,11 +56,8 @@ def make_team(project, contributors, busy_collaborators):
     if len(cont) >= len(skills):
         for skill, value in skills:
             for collab in cont:
-                if contributors[skill][collab] > value and collab not in team:
+                if contributors[skill][collab] >= value and collab not in team:
                     team.append(collab)
-                if contributors[skill][collab] == value and collab not in team:
-                    team.append(collab)
-                    contributors[skill][collab] += 1
                     break
             else:
                 return 0
@@ -80,7 +77,8 @@ def is_project_worthy(project, current_day):
     return project["score"] > (current_day - project["best_before"])
 
 def is_project_unworthy(project, current_day):
-    return project["score"] < (current_day - project["best_before"])
+    return project["score"] <= (current_day - project["best_before"])
+
 def make_output_file(assignments, output_suffix):
     with open(f'output-{output_suffix}.txt', 'w') as f:
         f.write(f"{len(assignments)}\n")
