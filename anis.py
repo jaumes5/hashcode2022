@@ -10,7 +10,8 @@ def solve(contributors, projects_d):
     done_projects = set()
     busy_collaborators = set()
     while True:
-        
+        if all_projects_are_impossible(current_day, projects_d):
+            break
 
         for (project, start_day, team) in current_projects:
             if is_project_done(project, start_day, current_day, team):
@@ -18,6 +19,10 @@ def solve(contributors, projects_d):
                 del projects_d[project["name"]]
 
         projects = sort_projects(projects_d.values())
+
+        if is_project_impossible(projects[0]):
+            break
+        
         for project in projects:
             if is_project_doable(project, contributors, current_day, busy_collaborators, current_projects):
                 team = make_team(project, contributors, busy_collaborators)
@@ -45,3 +50,9 @@ def make_team(project, contributors, busy_collaborators):
 
 def is_project_done(project, start_day, current_day, team):
     pass
+
+def all_projects_are_impossible(current_day, projects_d):
+    return False 
+
+def is_project_impossible(project):
+    return False
