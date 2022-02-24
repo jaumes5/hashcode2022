@@ -3,7 +3,6 @@ def solve(contributors, projects_dict):
     projects : {"name": "Logging", "required_skills":  [{"name": "c++", "level": 2}], "days" : 3, "best_before_day" : 3, "score" : 100}
     contributors : [{"name" : "Bob", "skills" : [{"name": "c++", "level": 2}]}]
     """
-    print(contributors)
     current_day = 0
 
     assignments = []
