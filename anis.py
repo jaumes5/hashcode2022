@@ -1,4 +1,4 @@
-def solve(contributors, projects_d):
+def solve(contributors, projects_dict):
     """
     projects : {"name": "Logging", "required_skills":  [{"name": "c++", "level": 2}], "days" : 3, "best_before_day" : 3, "score" : 100}
     contributors : [{"name" : "Bob", "skills" : [{"name": "c++", "level": 2}]}]
@@ -11,25 +11,26 @@ def solve(contributors, projects_d):
     done_projects = set()
     busy_collaborators = set()
     while True:
-        if all_projects_are_impossible(current_day, projects_d):
+        if all_projects_are_impossible(current_day, projects_dict):
             break
 
         for (project, start_day, team) in current_projects:
             if is_project_done(project, start_day, current_day, team):
                 busy_collaborators = busy_collaborators.difference(team)
-                del projects_d[project["name"]]
+                
 
-        projects = sort_projects(projects_d.values())
+        projects = sort_projects(projects_dict.values())
 
-        if is_project_impossible(projects[0]):
+        if is_project_impossible(projects[0], current_day):
             break
 
         for project in projects:
-            if is_project_doable(project, contributors, current_day, busy_collaborators, current_projects):
-                team = make_team(project, contributors, busy_collaborators)
-                assignments += (project, team)
-                current_projects.add((project, team))
+            team = make_team(project, contributors, busy_collaborators)
+            if team: 
+                assignments += [(project, team)]
+                current_projects += [(project, team)]
                 busy_collaborators.update(team)
+                del projects_dict[project["name"]]
 
         
         current_day += 1    
@@ -50,7 +51,7 @@ def make_team(project, contributors, busy_collaborators):
     pass
 
 def is_project_done(project, start_day, current_day, team):
-    pass
+    return current_day >= (start_day + project["num_days"])
 
 def all_projects_are_impossible(current_day, projects_d):
     return True 
