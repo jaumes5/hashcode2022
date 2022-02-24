@@ -11,7 +11,7 @@ def solve(contributors, projects_dict):
     done_projects = set()
     busy_collaborators = set()
     while True:
-        if all_projects_are_unworthy(current_day, projects_dict):
+        if not any_project_profitable(projects_dict, current_day):
             break
 
         for (project, start_day, team) in current_projects:
@@ -54,11 +54,11 @@ def make_team(project, contributors, busy_collaborators):
 def is_project_done(project, start_day, current_day, team):
     return current_day >= (start_day + project["num_days"])
 
-def all_projects_are_unworthy(projects_dict, current_day):
-    return all(is_project_unworthy(p, current_day) for p in projects_dict.values()) 
+def any_project_profitable(projects_dict, current_day):
+    return any(is_project_worthy(p, current_day) for p in projects_dict.values()) 
 
-def is_project_unworthy(project, current_day):
+def is_project_worthy(project, current_day):
     # 5 > (13 - 10)
     # 5 > (2 - 10)
-
+    print(f' {project["score"]} > ({current_day} - {project["best_before"]})')
     return project["score"] > (current_day - project["best_before"])
