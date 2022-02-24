@@ -76,8 +76,8 @@ def is_project_worthy(project, current_day):
     return project["score"] > (current_day - project["best_before"])
 
 
-def make_output_file(assignments):
-    with open('output.txt', 'w') as f:
+def make_output_file(assignments, output_suffix):
+    with open(f'output-{output_suffix}.txt', 'w') as f:
         f.write(f"{len(assignments)}\n")
         for a in assignments:
             f.write(f"{a[0]['name']}\n")
