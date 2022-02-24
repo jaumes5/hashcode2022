@@ -21,10 +21,12 @@ def solve(contributors, projects_dict):
         projects = sort_projects(projects_dict.values())
 
         # optimisation for later
-        # if is_project_unworthy(projects[0], current_day):
-        #     break
+
 
         for project in projects:
+            if is_project_unworthy(projects[0], current_day):
+                del projects_dict[project["name"]]
+                continue
             team = make_team(project, contributors, busy_collaborators)
             if team: 
                 assignments += [(project, team)]
@@ -77,7 +79,8 @@ def is_project_worthy(project, current_day):
     # print(f' {project["score"]} > ({current_day} - {project["best_before"]})')
     return project["score"] > (current_day - project["best_before"])
 
-
+def is_project_unworthy(project, current_day):
+    return project["score"] < (current_day - project["best_before"])
 def make_output_file(assignments, output_suffix):
     with open(f'output-{output_suffix}.txt', 'w') as f:
         f.write(f"{len(assignments)}\n")
