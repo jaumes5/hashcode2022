@@ -54,7 +54,7 @@ def make_team(project, contributors, busy_collaborators):
     team = []
     if len(cont) >= len(skills):
         for skill, value in skills:
-            for collab in cont:
+            for collab in cont and collab not in team:
                 if contributors[skill][collab] >= value:
                     team.append(collab)
                     break
