@@ -46,12 +46,12 @@ def solve(contributors_1, projects_dict_1):
         # optimisation for later
         # if is_project_unworthy(projects[0], current_day):
         #     break
-
+        tuple_busy = tuple(sorted(busy_collaborators))
         for project in projects[:min(len(projects) // red_list + 1, len(projects))]:
             if is_project_unworthy(project, current_day):
                 del projects_dict[project["name"]]
                 continue
-            team = make_team(project["name"], tuple(sorted(busy_collaborators)))
+            team = make_team(project["name"], tuple_busy)
             if team: 
                 assignments += [(project, team)]
                 current_projects += [(project, current_day, team)]
