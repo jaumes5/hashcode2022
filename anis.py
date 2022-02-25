@@ -51,7 +51,7 @@ def solve(contributors_1, projects_dict_1):
             if is_project_unworthy(project, current_day):
                 del projects_dict[project["name"]]
                 continue
-            team = make_team(project["name"], tuple(busy_collaborators))
+            team = make_team(project["name"], tuple(sorted(busy_collaborators)))
             if team: 
                 assignments += [(project, team)]
                 current_projects += [(project, current_day, team)]
